@@ -47,7 +47,7 @@ public class NomenclatureServiceImpl extends AbstractService<Nomenclature, Strin
 	public List<String> findRequiredNomenclatureByQuestionnaire(Set<QuestionnaireModel> setQuestionnaireModel) {
 		return setQuestionnaireModel.parallelStream().map(QuestionnaireModel::getNomenclatures).collect(Collectors.toList())
 				.parallelStream().flatMap(Set::parallelStream).collect(Collectors.toList())
-				.parallelStream().distinct().map(Nomenclature::getLabel).collect(Collectors.toList());
+				.parallelStream().distinct().map(Nomenclature::getId).collect(Collectors.toList());
 	}
 	
 	public List<String> findRequiredNomenclatureByCampaign(String campaignId) {
@@ -56,7 +56,7 @@ public class NomenclatureServiceImpl extends AbstractService<Nomenclature, Strin
 			Set<QuestionnaireModel> setQuestionnaireModel = campaignOptional.get().getQuestionnaireModels();
 			return setQuestionnaireModel.parallelStream().map(QuestionnaireModel::getNomenclatures).collect(Collectors.toList())
 					.parallelStream().flatMap(Set::parallelStream).collect(Collectors.toList())
-					.parallelStream().distinct().map(Nomenclature::getLabel).collect(Collectors.toList());
+					.parallelStream().distinct().map(Nomenclature::getId).collect(Collectors.toList());
 		} else {
 			return null;
 		}
